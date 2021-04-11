@@ -34,6 +34,7 @@ void signup_ui()
 void login_ui()
 {
     printf("test");
+    main_splash_screen();
 }
 void main_splash_screen()
 {
