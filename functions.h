@@ -9,3 +9,4 @@ void main_splash_screen();
 void clrscr();
 
 void delay(int number_of_seconds);
+int c_newuser(char *, char *, char *);
