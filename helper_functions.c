@@ -42,6 +42,7 @@ void signup_ui()
 
 void login_ui()
 {
+<<<<<<< HEAD
     clrscr();
     char *name;
     name = (char *)malloc(20);
@@ -61,6 +62,10 @@ void login_ui()
     }
     lpswd[z] = '\0';
     printf("%s", lpswd);
+=======
+    printf("test");
+    main_splash_screen();
+>>>>>>> e378662cab2d321de35e8c2369fc8a2da2275ec8
 }
 void main_splash_screen()
 {
