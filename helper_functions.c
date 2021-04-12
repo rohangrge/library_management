@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <conio.h>
 void signup_ui()
 {
     clrscr();
@@ -12,14 +13,22 @@ void signup_ui()
     mno = (char *)malloc(20);
     char *email;
     email = (char *)malloc(40);
+    char *passwd;
+    email = (char *)malloc(40);
     printf("\t\t\t\t\t\tWelcome to signup,enter your details below\n");
     printf("\t\t\t\t\t\tEnter your name :");
     scanf("%s", name);
     printf("\n\t\t\t\t\t\tEnter your mobile number:");
     scanf("%s", mno);
-    printf("\n\t\t\t\t\t\tEnter your email id");
+    printf("\n\t\t\t\t\t\tEnter your email id:");
     scanf("%s", email);
-    int status = c_newuser(name, mno, email);
+    printf("\n\t\t\t\t\t\tEnter your password:");
+    scanf("%s", passwd);
+    int status = c_newuser(name, mno, email, passwd);
+    free(name);
+    free(mno);
+    free(email);
+    free(passwd);
     if (status == 1)
     {
         printf("\n\n\t\t\t\t\t\tUser succesfully created");
@@ -33,7 +42,25 @@ void signup_ui()
 
 void login_ui()
 {
-    printf("test");
+    clrscr();
+    char *name;
+    name = (char *)malloc(20);
+    char lpswd[20];
+    char c;
+    int z = 0;
+    //c = (char *)malloc(4);
+    printf("\t\t\t\t\t\tWelcome to login,enter your details below\n");
+    printf("\t\t\t\t\t\tEnter your name :");
+    scanf("%s", name);
+    printf("\n\t\t\t\t\t\tEnter your password:");
+
+    while ((c = getch()) != 13)
+    {
+        lpswd[z++] = c;
+        printf("%c", '*');
+    }
+    lpswd[z] = '\0';
+    printf("%s", lpswd);
 }
 void main_splash_screen()
 {
@@ -64,11 +91,11 @@ void main_splash_screen()
     }
 }
 
-int c_newuser(char *name, char *mno, char *email)
+int c_newuser(char *name, char *mno, char *email, char *passwd)
 {
     FILE *fp;
     fp = fopen("userdb.txt", "a");
-    fprintf(fp, "%s %s %s\n", name, mno, email);
+    fprintf(fp, "%s %s %s %s\n", name, mno, email, passwd);
     fclose(fp);
     return 1;
 }
