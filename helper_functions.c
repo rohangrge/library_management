@@ -60,7 +60,7 @@ void login_ui()
         printf("%c", '*');
     }
     int rvalue = login_check(name, lpswd);
-    printf("%d", rvalue);
+    //printf("%d", rvalue);
     if (rvalue == 1)
     {
         main_screen_ui(name);
@@ -73,7 +73,7 @@ void login_ui()
     }
     else if (rvalue == 3)
     {
-        printf("\t\t\t\t\t\tSorry,this user does not exist\n");
+        printf("\n\t\t\t\t\t\tSorry,this user does not exist\n");
         delay(2);
         login_ui();
     }
@@ -89,19 +89,19 @@ uschema *userstruct(char *fp)
     int count = 0;
     while (fscanf(lfp, "%s %s %s %s\n", name, mno, mail, passwd) != EOF)
     {
-        uarr[count].name = name;
-        uarr[count].mno = mno;
-        uarr[count].email = mail;
-        uarr[count].passwd = passwd;
+        strcpy(uarr[count].name, name);
+        strcpy(uarr[count].mno, mno);
+        strcpy(uarr[count].email, mail);
+        strcpy(uarr[count].passwd, passwd);
         count += 1;
     }
-    fclose(fp);
+    fclose(lfp);
     return uarr;
 }
 
 void update_file(char *path, libschema *books)
 {
-    FILE *fp = fopen(path, 'w');
+    FILE *fp = fopen(path, "w");
     int flag = 0;
     while (books->author != NULL)
     {
@@ -117,7 +117,7 @@ int login_check(char *name, char *lpswd)
     int c = 0;
     while (cuser[c].email != NULL)
     {
-        if (strcmp(cuser->name, name))
+        if (strcmp(cuser->name, name) == 0)
         {
             if (strcmp(cuser->passwd, lpswd) == 0)
             {
