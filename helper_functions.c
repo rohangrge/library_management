@@ -59,9 +59,83 @@ void login_ui()
         lpswd[z++] = c;
         printf("%c", '*');
     }
-    lpswd[z] = '\0';
-    printf("%s", lpswd);
+    int rvalue = login_check(name, lpswd);
+    printf("%d", rvalue);
+    if (rvalue == 1)
+    {
+        main_screen_ui(name);
+    }
+    else if (rvalue == 2)
+    {
+        printf("\n\t\t\t\t\t\tSorry,your entered password is wrong,please try again\n");
+        delay(2);
+        login_ui();
+    }
+    else if (rvalue == 3)
+    {
+        printf("\t\t\t\t\t\tSorry,this user does not exist\n");
+        delay(2);
+        login_ui();
+    }
 }
+uschema *userstruct(char *fp)
+{
+    FILE *lfp = fopen(fp, "r");
+    uschema *uarr = malloc(sizeof(uschema) * 20);
+    char name[40];
+    char mno[40];
+    char mail[40];
+    char passwd[40];
+    int count = 0;
+    while (fscanf(lfp, "%s %s %s %s\n", name, mno, mail, passwd) != EOF)
+    {
+        uarr[count].name = name;
+        uarr[count].mno = mno;
+        uarr[count].email = mail;
+        uarr[count].passwd = passwd;
+        count += 1;
+    }
+    fclose(fp);
+    return uarr;
+}
+
+void update_file(char *path, libschema *books)
+{
+    FILE *fp = fopen(path, 'w');
+    int flag = 0;
+    while (books->author != NULL)
+    {
+        fprintf(fp, "%s %s %s %s %s", books->title, books->author, books->status, books->user, books->duedate);
+        flag += 1;
+    }
+    fclose(fp);
+}
+
+int login_check(char *name, char *lpswd)
+{
+    uschema *cuser = userstruct("userdb.txt");
+    int c = 0;
+    while (cuser[c].email != NULL)
+    {
+        if (strcmp(cuser->name, name))
+        {
+            if (strcmp(cuser->passwd, lpswd) == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        else
+        {
+            return 3;
+        }
+        c += 1;
+    }
+}
+
 void main_splash_screen()
 {
     printf("\t\t\t\t\t\t****Welcome to our library management system!****\n");
@@ -89,6 +163,14 @@ void main_splash_screen()
         clrscr();
         main_splash_screen();
     }
+}
+void main_screen_ui(char *name)
+{
+    printf("\t\t\t\t\tYou have succesfully logged into the library\n");
+    printf("\t\t\t\t\tChose your options below\n");
+    printf("\t\t\t\t\t1.Check book availability\n");
+    printf("\t\t\t\t\t2.Borrow book\n");
+    printf("\t\t\t\t\t3.Return book\n");
 }
 
 int c_newuser(char *name, char *mno, char *email, char *passwd)
