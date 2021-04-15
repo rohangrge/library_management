@@ -4,5 +4,6 @@
 
 void main()
 {
+    //userstruct("test");
     main_splash_screen();
 }
