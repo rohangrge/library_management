@@ -6,4 +6,5 @@ void main()
 {
     //userstruct("test");
     main_splash_screen();
+    //show_avail("userdb.txt");
 }

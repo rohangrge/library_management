@@ -8,11 +8,13 @@ void login_ui();
 void main_splash_screen();
 
 void clrscr();
-
+void return_flow(char *path, char *name);
+void borrow_flow(char *path, char *name);
 void delay(int number_of_seconds);
 int c_newuser(char *, char *, char *, char *);
 void main_screen_ui(char *name);
 int login_check(char *name, char *passwd);
+
 typedef struct libstatus
 {
     char title[40];
