@@ -59,8 +59,9 @@ void login_ui()
         lpswd[z++] = c;
         printf("%c", '*');
     }
+    lpswd[z] = '\0';
     int rvalue = login_check(name, lpswd);
-    //printf("%d", rvalue);
+    printf("%d", rvalue);
     if (rvalue == 1)
     {
         main_screen_ui(name);
@@ -99,16 +100,62 @@ uschema *userstruct(char *fp)
     return uarr;
 }
 
+libschema *libstruct(char *fp)
+{
+    FILE *lfp = fopen(fp, "r");
+    libschema *uarr = malloc(sizeof(uschema) * 20);
+    char title[40];
+    char author[40];
+    char status[40];
+    char user[40];
+    char duedate[40];
+    int count = 0;
+    int tcount = 0;
+    while (tcount != 20)
+    {
+        strcpy(uarr[tcount].title, "\0");
+        tcount += 1;
+    }
+    while (fscanf(lfp, "%s %s %s %s %s\n", title, author, status, user, duedate) != EOF)
+    {
+        strcpy(uarr[count].title, title);
+        strcpy(uarr[count].author, author);
+        strcpy(uarr[count].status, status);
+        strcpy(uarr[count].user, user);
+        strcpy(uarr[count].duedate, duedate);
+        count += 1;
+    }
+    fclose(lfp);
+    return uarr;
+}
+
 void update_file(char *path, libschema *books)
 {
     FILE *fp = fopen(path, "w");
     int flag = 0;
-    while (books->author != NULL)
+    while (flag < 5)
     {
-        fprintf(fp, "%s %s %s %s %s", books->title, books->author, books->status, books->user, books->duedate);
+        fprintf(fp, "%s %s %s %s %s", books[flag].title, books[flag].author, books[flag].status, books[flag].user, books[flag].duedate);
         flag += 1;
     }
     fclose(fp);
+}
+
+void show_avail(char *path, char *name)
+{
+    clrscr();
+    libschema *listbooks = libstruct(path);
+    int cr = 0;
+    printf("\t\t\t\tList of available books are\n");
+    printf("\t\t\t\tTitle Author Status\n");
+    printf("\t\t\t\t--------------------\n");
+    while (cr != 5)
+    {
+        printf("\t\t\t\t%s %s %s\n\n", listbooks[cr].title, listbooks[cr].author, listbooks[cr].status);
+
+        cr += 1;
+    }
+    main_screen_ui("user");
 }
 
 int login_check(char *name, char *lpswd)
@@ -117,9 +164,9 @@ int login_check(char *name, char *lpswd)
     int c = 0;
     while (cuser[c].email != NULL)
     {
-        if (strcmp(cuser->name, name) == 0)
+        if (strcmp(cuser[c].name, name) == 0)
         {
-            if (strcmp(cuser->passwd, lpswd) == 0)
+            if (strcmp(cuser[c].passwd, lpswd) == 0)
             {
                 return 1;
             }
@@ -171,6 +218,57 @@ void main_screen_ui(char *name)
     printf("\t\t\t\t\t1.Check book availability\n");
     printf("\t\t\t\t\t2.Borrow book\n");
     printf("\t\t\t\t\t3.Return book\n");
+    int choice;
+    scanf("\t\t\t\t%d", &choice);
+    if (choice == 1)
+    {
+        show_avail("libdb.txt", name);
+    }
+    if (choice == 2)
+    {
+        borrow_flow("libdb.txt", name);
+    }
+    if (choice == 3)
+    {
+        return_flow("libdb.txt", name);
+    }
+}
+
+void borrow_flow(char *path, char *name)
+{
+    libschema *out = libstruct(path);
+    char title[50];
+    printf("\t\t\t\tPlease enter the name of the book would like to borrow below");
+    scanf("%s", title);
+    int count = 0;
+    while (count < 5)
+    {
+        if (strcmp(out[count].title, title) == 0)
+        {
+            if (strcmp(out[count].status, "Available") == 0)
+            {
+                time_t seconds;
+                seconds = (time(NULL) / 3600) + 72;
+                char time[50];
+                itoa(seconds, time, 10);
+                printf("\t\t\t\tyou have successfully borrowed the book\n");
+                strcpy(out[count].status, "Borrowed");
+                strcpy(out[count].duedate, time);
+                strcpy(out[count].user, name);
+                update_file("libdb.txt", out);
+                main_screen_ui(name);
+            }
+            else
+            {
+                printf("\t\t\t\tEntered book is not available\n");
+            }
+        }
+        else
+        {
+            printf("\t\t\t\tEntered book does not belong to our inventory\n");
+        }
+        count += 1;
+    }
 }
 
 int c_newuser(char *name, char *mno, char *email, char *passwd)
@@ -180,6 +278,11 @@ int c_newuser(char *name, char *mno, char *email, char *passwd)
     fprintf(fp, "%s %s %s %s\n", name, mno, email, passwd);
     fclose(fp);
     return 1;
+}
+
+void return_flow(char *path, char *name)
+{
+    printf("test");
 }
 
 void clrscr()
