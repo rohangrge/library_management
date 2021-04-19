@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-//#include <conio.h>
+#include <conio.h>
 void signup_ui()
 {
     clrscr();
@@ -54,12 +54,13 @@ void login_ui()
     scanf("%s", name);
     printf("\n\t\t\t\t\t\tEnter your password:");
 
-    while ((c = (getch()) != 13))
+    while ((c = getch()) != 13)
     {
         lpswd[z++] = c;
         printf("%c", '*');
     }
     lpswd[z] = '\0';
+    //printf("%s", lpswd);
     int rvalue = login_check(name, lpswd);
     printf("%d", rvalue);
     if (rvalue == 1)
@@ -166,6 +167,8 @@ int login_check(char *name, char *lpswd)
     {
         if (strcmp(cuser[c].name, name) == 0)
         {
+            //printf("%s\n", lpswd);
+            //printf("%s", cuser[c].passwd);
             if (strcmp(cuser[c].passwd, lpswd) == 0)
             {
                 return 1;
@@ -282,7 +285,53 @@ int c_newuser(char *name, char *mno, char *email, char *passwd)
 
 void return_flow(char *path, char *name)
 {
-    printf("test");
+    libschema *rflow = libstruct(path);
+    int c = 0;
+    char opt[10];
+    while (c <= 5)
+    {
+        if (strcmp(rflow[c].user, name) == 0)
+        {
+            printf("\t\t\t\tYou have one pending book to return\n\n");
+            printf("\t\t\t\t%s %s %s\n\n", rflow[c].title, rflow[c].author, rflow[c].status);
+            printf("\t\t\t\tPlease enter yes to return this book\n");
+            scanf("%s", opt);
+            if (strcmp(opt, "Yes") == 0)
+            {
+                int days = atoi(rflow[c].duedate);
+                time_t seconds;
+                seconds = (time(NULL) / 3600);
+                if ((seconds - days) < 72)
+                {
+                    printf("\t\t\t\tNo fine will be applied\n\n");
+                    strcpy(rflow[c].status, "Available");
+                    strcpy(rflow[c].user, "null");
+                    strcpy(rflow[c].duedate, "null");
+                    update_file("libdb.txt", rflow);
+                    main_screen_ui(name);
+                }
+                else
+                {
+                    printf("\t\t\t\tPlease pay a fine of Rs.50\n\n");
+                    main_screen_ui(name);
+                }
+            }
+            else
+            {
+                printf("\t\t\t\tInvalid input received,please reenter");
+                return_flow(path, name);
+            }
+        }
+        else
+        {
+            printf("\t\t\t\tYou have no pending book to return\n");
+            printf("\t\t\t\tReturning to main screen");
+            delay(3);
+            clrscr();
+            main_screen_ui(name);
+        }
+        c += 1;
+    }
 }
 
 void clrscr()
