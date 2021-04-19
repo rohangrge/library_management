@@ -14,7 +14,7 @@ void signup_ui()
     char *email;
     email = (char *)malloc(40);
     char *passwd;
-    email = (char *)malloc(40);
+    passwd = (char *)malloc(40);
     printf("\t\t\t\t\t\tWelcome to signup,enter your details below\n");
     printf("\t\t\t\t\t\tEnter your name :");
     scanf("%s", name);
@@ -79,6 +79,7 @@ void login_ui()
         delay(2);
         login_ui();
     }
+    free(name);
 }
 uschema *userstruct(char *fp)
 {
