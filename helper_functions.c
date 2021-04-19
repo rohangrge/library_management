@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <conio.h>
+//#include <conio.h>
 void signup_ui()
 {
     clrscr();
@@ -54,7 +54,7 @@ void login_ui()
     scanf("%s", name);
     printf("\n\t\t\t\t\t\tEnter your password:");
 
-    while ((c = getch()) != 13)
+    while ((c = (getch()) != 13))
     {
         lpswd[z++] = c;
         printf("%c", '*');
