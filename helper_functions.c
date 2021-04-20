@@ -273,7 +273,7 @@ void borrow_flow(char *path, char *name)
             count += 1;
             continue;
         }
-        }
+    }
     printf("\t\t\t\tEntered book is not available in our inventory\n");
 }
 
@@ -327,13 +327,17 @@ void return_flow(char *path, char *name)
         }
         else
         {
-            printf("\t\t\t\tYou have no pending book to return\n");
-            printf("\t\t\t\tReturning to main screen");
-            delay(3);
-            clrscr();
-            main_screen_ui(name);
+            c += 1;
+            continue;
         }
-        c += 1;
+    }
+    if (c > 5)
+    {
+        printf("\t\t\t\tYou have no pending book to return\n");
+        printf("\t\t\t\tReturning to main screen");
+        delay(3);
+        clrscr();
+        main_screen_ui(name);
     }
 }
 

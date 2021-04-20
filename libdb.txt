@@ -1,5 +1,5 @@
 AtlasShrugged AynRand Available null null
-Macbeth Shakespeare Borrowed Rohan 449775
-1984 GeorgeOrwell Borrowed Rohan 449775
+Macbeth Shakespeare Available null null
+1984 GeorgeOrwell Available null null
 Middlemarch GeorgeEliot Available null null
 InvisibleMan RalphEllison Available null null
