@@ -137,7 +137,7 @@ void update_file(char *path, libschema *books)
     int flag = 0;
     while (flag < 5)
     {
-        fprintf(fp, "%s %s %s %s %s", books[flag].title, books[flag].author, books[flag].status, books[flag].user, books[flag].duedate);
+        fprintf(fp, "%s %s %s %s %s\n", books[flag].title, books[flag].author, books[flag].status, books[flag].user, books[flag].duedate);
         flag += 1;
     }
     fclose(fp);
@@ -247,6 +247,7 @@ void borrow_flow(char *path, char *name)
     int count = 0;
     while (count < 5)
     {
+        printf("%s", out[count].title);
         if (strcmp(out[count].title, title) == 0)
         {
             if (strcmp(out[count].status, "Available") == 0)
@@ -269,10 +270,11 @@ void borrow_flow(char *path, char *name)
         }
         else
         {
-            printf("\t\t\t\tEntered book does not belong to our inventory\n");
+            count += 1;
+            continue;
         }
-        count += 1;
-    }
+        }
+    printf("\t\t\t\tEntered book is not available in our inventory\n");
 }
 
 int c_newuser(char *name, char *mno, char *email, char *passwd)
