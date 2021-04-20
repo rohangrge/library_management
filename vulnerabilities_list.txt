@@ -1,0 +1,140 @@
+Splint 3.1.2 --- 20 Feb 2018
+
+helper_functions.c: (in function signup_ui)
+helper_functions.c:20:17: Possibly null storage name passed as non-null param:
+                             scanf (..., name, ...)
+  A possibly null pointer is passed as a parameter corresponding to a formal
+  parameter with no /*@null@*/ annotation.  If NULL may be used for this
+  parameter, add a /*@null@*/ annotation to the function parameter declaration.
+  (Use -nullpass to inhibit warning)
+   helper_functions.c:11:12: Storage name may become null
+helper_functions.c:20:5: Return value (type int) ignored: scanf("%s", name)
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
+helper_functions.c:22:17: Possibly null storage mno passed as non-null param:
+                             scanf (..., mno, ...)
+   helper_functions.c:13:11: Storage mno may become null
+helper_functions.c:22:5: Return value (type int) ignored: scanf("%s", mno)
+helper_functions.c:24:17: Possibly null storage email passed as non-null param:
+                             scanf (..., email, ...)
+   helper_functions.c:15:13: Storage email may become null
+helper_functions.c:24:5: Return value (type int) ignored: scanf("%s", email)
+helper_functions.c:26:17: Possibly null storage passwd passed as non-null
+                             param: scanf (..., passwd, ...)
+   helper_functions.c:17:14: Storage passwd may become null
+helper_functions.c:26:5: Return value (type int) ignored: scanf("%s", passwd)
+helper_functions.c: (in function login_ui)
+helper_functions.c:54:17: Possibly null storage name passed as non-null param:
+                             scanf (..., name, ...)
+   helper_functions.c:47:12: Storage name may become null
+helper_functions.c:54:5: Return value (type int) ignored: scanf("%s", name)
+helper_functions.c:57:17: Unrecognized identifier: getch
+  Identifier used in code has not been declared. (Use -unrecog to inhibit
+  warning)
+helper_functions.c:57:12: Operands of != have incompatible types (char, int):
+                             (c = getch()) != 13
+  To make char and int types equivalent, use +charint.
+helper_functions.c: (in function userstruct)
+helper_functions.c:93:19: Possibly null storage lfp passed as non-null param:
+                             fscanf (lfp, ...)
+   helper_functions.c:86:17: Storage lfp may become null
+helper_functions.c:95:16: Index of possibly null pointer uarr: uarr
+  A possibly null pointer is dereferenced.  Value is either the result of a
+  function which may return null (in which case, code should check it is not
+  null), or a global, parameter or structure field declared with the null
+  qualifier. (Use -nullderef to inhibit warning)
+   helper_functions.c:87:21: Storage uarr may become null
+helper_functions.c:101:5: Return value (type int) ignored: fclose(lfp)
+helper_functions.c:102:12: Possibly null storage uarr returned as non-null:
+                              uarr
+  Function returns a possibly null pointer, but is not declared using
+  /*@null@*/ annotation of result.  If function may return NULL, add /*@null@*/
+  annotation to the return value declaration. (Use -nullret to inhibit warning)
+   helper_functions.c:87:21: Storage uarr may become null
+helper_functions.c:102:12: Returned storage *uarr contains 4 undefined fields:
+                              name, mno, email, passwd
+  Storage derivable from a parameter, return value or global is not defined.
+  Use /*@out@*/ to denote passed or returned storage which need not be defined.
+  (Use -compdef to inhibit warning)
+helper_functions.c: (in function libstruct)
+helper_functions.c:118:16: Index of possibly null pointer uarr: uarr
+   helper_functions.c:108:23: Storage uarr may become null
+helper_functions.c:121:19: Possibly null storage lfp passed as non-null param:
+                              fscanf (lfp, ...)
+   helper_functions.c:107:17: Storage lfp may become null
+helper_functions.c:123:16: Index of possibly null pointer uarr: uarr
+   helper_functions.c:108:23: Storage uarr may become null
+helper_functions.c:130:5: Return value (type int) ignored: fclose(lfp)
+helper_functions.c:131:12: Possibly null storage uarr returned as non-null:
+                              uarr
+   helper_functions.c:108:23: Storage uarr may become null
+helper_functions.c:131:12: Returned storage *uarr contains 5 undefined fields:
+                              title, author, status, user, duedate
+helper_functions.c: (in function update_file)
+helper_functions.c:140:17: Possibly null storage fp passed as non-null param:
+                              fprintf (fp, ...)
+   helper_functions.c:136:16: Storage fp may become null
+helper_functions.c:143:12: Possibly null storage fp passed as non-null param:
+                              fclose (fp)
+   helper_functions.c:136:16: Storage fp may become null
+helper_functions.c:143:5: Return value (type int) ignored: fclose(fp)
+helper_functions.c: (in function show_avail)
+helper_functions.c:161:2: Fresh storage listbooks not released before return
+  A memory leak has been detected. Storage allocated locally is not released
+  before the last reference to it is lost. (Use -mustfreefresh to inhibit
+  warning)
+   helper_functions.c:149:44: Fresh storage listbooks created
+helper_functions.c:146:35: Parameter name not used
+  A function parameter is not used in the body of the function. If the argument
+  is needed for type compatibility or future plans, use /*@unused@*/ in the
+  argument declaration. (Use -paramuse to inhibit warning)
+helper_functions.c: (in function login_check)
+helper_functions.c:175:26: Fresh storage cuser not released before return
+   helper_functions.c:165:47: Fresh storage cuser created
+helper_functions.c:179:26: Fresh storage cuser not released before return
+   helper_functions.c:165:47: Fresh storage cuser created
+helper_functions.c:184:22: Fresh storage cuser not released before return
+   helper_functions.c:165:47: Fresh storage cuser created
+helper_functions.c:186:9: Unreachable code: c += 1
+  This code will never be reached on any possible execution. (Use -unreachable
+  to inhibit warning)
+helper_functions.c:188:2: Path with no return in function declared to return
+                             int
+  There is a path through a function declared to return a value on which there
+  is no return statement. This means the execution may fall through without
+  returning a meaningful result to the caller. (Use -noret to inhibit warning)
+helper_functions.c:188:2: Fresh storage cuser not released before return
+   helper_functions.c:165:47: Fresh storage cuser created
+helper_functions.c: (in function main_splash_screen)
+helper_functions.c:198:5: Return value (type int) ignored: scanf("\t\t\t\t\...
+helper_functions.c: (in function main_screen_ui)
+helper_functions.c:226:5: Return value (type int) ignored: scanf("\t\t\t\t%...
+helper_functions.c: (in function borrow_flow)
+helper_functions.c:246:5: Return value (type int) ignored: scanf("%s", title)
+helper_functions.c:258:17: Unrecognized identifier: itoa
+helper_functions.c:261:44: Passed storage time not completely defined (*time is
+                              undefined): strcpy (..., time)
+helper_functions.c:262:24: Parameter 1 (out[count].user) to function strcpy is
+    declared unique but may be aliased externally by parameter 2 (name)
+  A unique or only parameter may be aliased by some other parameter or visible
+  global. (Use -mayaliasunique to inhibit warning)
+helper_functions.c:278:2: Fresh storage out not released before return
+   helper_functions.c:243:38: Fresh storage out created
+helper_functions.c: (in function c_newuser)
+helper_functions.c:284:13: Possibly null storage fp passed as non-null param:
+                              fprintf (fp, ...)
+   helper_functions.c:283:10: Storage fp may become null
+helper_functions.c:285:5: Return value (type int) ignored: fclose(fp)
+helper_functions.c: (in function return_flow)
+helper_functions.c:301:13: Return value (type int) ignored: scanf("%s", opt)
+helper_functions.c:342:2: Fresh storage rflow not released before return
+   helper_functions.c:291:40: Fresh storage rflow created
+helper_functions.c: (in function clrscr)
+helper_functions.c:346:5: Return value (type int) ignored: system("clear")
+helper_functions.c:105:12: Function exported but not used outside
+                              helper_functions: libstruct
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   helper_functions.c:132:1: Definition of libstruct
+
+Finished checking --- 47 code warnings
