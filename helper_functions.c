@@ -62,7 +62,7 @@ void login_ui()
     lpswd[z] = '\0';
     //printf("%s", lpswd);
     int rvalue = login_check(name, lpswd);
-    printf("%d", rvalue);
+    //printf("%d", rvalue);
     if (rvalue == 1)
     {
         main_screen_ui(name);
@@ -157,7 +157,7 @@ void show_avail(char *path, char *name)
 
         cr += 1;
     }
-    main_screen_ui("user");
+    main_screen_ui(name);
 }
 
 int login_check(char *name, char *lpswd)
@@ -179,12 +179,9 @@ int login_check(char *name, char *lpswd)
                 return 2;
             }
         }
-        else
-        {
-            return 3;
-        }
         c += 1;
     }
+    return 3;
 }
 
 void main_splash_screen()
@@ -217,7 +214,7 @@ void main_splash_screen()
 }
 void main_screen_ui(char *name)
 {
-    printf("\t\t\t\t\tYou have succesfully logged into the library\n");
+    printf("\n\t\t\t\t\tYou have succesfully logged into the library\n\n");
     printf("\t\t\t\t\tChose your options below\n");
     printf("\t\t\t\t\t1.Check book availability\n");
     printf("\t\t\t\t\t2.Borrow book\n");
@@ -230,6 +227,7 @@ void main_screen_ui(char *name)
     }
     if (choice == 2)
     {
+        //show_avail("libdb.txt", name);
         borrow_flow("libdb.txt", name);
     }
     if (choice == 3)
@@ -242,7 +240,7 @@ void borrow_flow(char *path, char *name)
 {
     libschema *out = libstruct(path);
     char title[50];
-    printf("\t\t\t\tPlease enter the name of the book would like to borrow below");
+    printf("\t\t\t\tPlease enter the name of the book would like to borrow below:");
     scanf("%s", title);
     int count = 0;
     while (count < 5)
@@ -299,7 +297,7 @@ void return_flow(char *path, char *name)
             printf("\t\t\t\t%s %s %s\n\n", rflow[c].title, rflow[c].author, rflow[c].status);
             printf("\t\t\t\tPlease enter yes to return this book\n");
             scanf("%s", opt);
-            if (strcmp(opt, "Yes") == 0)
+            if (strcmp(opt, "yes") == 0)
             {
                 int days = atoi(rflow[c].duedate);
                 time_t seconds;
@@ -311,17 +309,20 @@ void return_flow(char *path, char *name)
                     strcpy(rflow[c].user, "null");
                     strcpy(rflow[c].duedate, "null");
                     update_file("libdb.txt", rflow);
+                    free(rflow);
                     main_screen_ui(name);
                 }
                 else
                 {
                     printf("\t\t\t\tPlease pay a fine of Rs.50\n\n");
+                    free(rflow);
                     main_screen_ui(name);
                 }
             }
             else
             {
                 printf("\t\t\t\tInvalid input received,please reenter");
+                free(rflow);
                 return_flow(path, name);
             }
         }
@@ -337,6 +338,7 @@ void return_flow(char *path, char *name)
         printf("\t\t\t\tReturning to main screen");
         delay(3);
         clrscr();
+        free(rflow);
         main_screen_ui(name);
     }
 }
