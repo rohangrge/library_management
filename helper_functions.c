@@ -245,7 +245,7 @@ void borrow_flow(char *path, char *name)
     int count = 0;
     while (count < 5)
     {
-        printf("%s", out[count].title);
+        //printf("%s", out[count].title);
         if (strcmp(out[count].title, title) == 0)
         {
             if (strcmp(out[count].status, "Available") == 0)
