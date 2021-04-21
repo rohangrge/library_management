@@ -345,7 +345,7 @@ void return_flow(char *path, char *name)
 
 void clrscr()
 {
-    system("clear");
+    system("cls");
 }
 
 void delay(int number_of_seconds)
