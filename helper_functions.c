@@ -214,7 +214,7 @@ void main_splash_screen()
 }
 void main_screen_ui(char *name)
 {
-    printf("\n\t\t\t\t\tYou have succesfully logged into the library\n");
+    printf("\n\t\t\t\t\tYou have succesfully logged into the library\n\n");
     printf("\t\t\t\t\tChose your options below\n");
     printf("\t\t\t\t\t1.Check book availability\n");
     printf("\t\t\t\t\t2.Borrow book\n");
