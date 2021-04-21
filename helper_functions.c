@@ -157,7 +157,7 @@ void show_avail(char *path, char *name)
 
         cr += 1;
     }
-    main_screen_ui("user");
+    main_screen_ui(name);
 }
 
 int login_check(char *name, char *lpswd)
@@ -227,7 +227,7 @@ void main_screen_ui(char *name)
     }
     if (choice == 2)
     {
-        show_avail("libdb.txt", name);
+        //show_avail("libdb.txt", name);
         borrow_flow("libdb.txt", name);
     }
     if (choice == 3)
@@ -240,7 +240,7 @@ void borrow_flow(char *path, char *name)
 {
     libschema *out = libstruct(path);
     char title[50];
-    printf("\t\t\t\tPlease enter the name of the book would like to borrow below");
+    printf("\t\t\t\tPlease enter the name of the book would like to borrow below:");
     scanf("%s", title);
     int count = 0;
     while (count < 5)
