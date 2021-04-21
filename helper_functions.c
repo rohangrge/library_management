@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <conio.h>
+//#include <conio.h>
 void signup_ui()
 {
     clrscr();
@@ -179,12 +179,9 @@ int login_check(char *name, char *lpswd)
                 return 2;
             }
         }
-        else
-        {
-            return 3;
-        }
         c += 1;
     }
+    return 3;
 }
 
 void main_splash_screen()
@@ -311,17 +308,20 @@ void return_flow(char *path, char *name)
                     strcpy(rflow[c].user, "null");
                     strcpy(rflow[c].duedate, "null");
                     update_file("libdb.txt", rflow);
+                    free(rflow);
                     main_screen_ui(name);
                 }
                 else
                 {
                     printf("\t\t\t\tPlease pay a fine of Rs.50\n\n");
+                    free(rflow);
                     main_screen_ui(name);
                 }
             }
             else
             {
                 printf("\t\t\t\tInvalid input received,please reenter");
+                free(rflow);
                 return_flow(path, name);
             }
         }
@@ -337,6 +337,7 @@ void return_flow(char *path, char *name)
         printf("\t\t\t\tReturning to main screen");
         delay(3);
         clrscr();
+        free(rflow);
         main_screen_ui(name);
     }
 }
