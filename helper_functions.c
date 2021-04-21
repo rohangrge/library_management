@@ -296,7 +296,7 @@ void return_flow(char *path, char *name)
             printf("\t\t\t\t%s %s %s\n\n", rflow[c].title, rflow[c].author, rflow[c].status);
             printf("\t\t\t\tPlease enter yes to return this book\n");
             scanf("%s", opt);
-            if (strcmp(opt, "Yes") == 0)
+            if (strcmp(opt, "yes") == 0)
             {
                 int days = atoi(rflow[c].duedate);
                 time_t seconds;
