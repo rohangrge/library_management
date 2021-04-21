@@ -227,6 +227,7 @@ void main_screen_ui(char *name)
     }
     if (choice == 2)
     {
+        show_avail("libdb.txt", name);
         borrow_flow("libdb.txt", name);
     }
     if (choice == 3)
